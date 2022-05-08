@@ -23,4 +23,6 @@ const Home = () => {
   );
 };
 
+Home.hideHeader = true;
+
 export default Home;

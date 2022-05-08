@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import { useState } from 'react';
 import ChipSelect from '../../src/components/chip-select';
 
@@ -11,11 +12,11 @@ const Profile = () => {
   const [selectedOptions, setSelectedOptions] = useState([{ id: 2, value: 'Peter' }]);
 
   return (
-    <>
+    <Container maxWidth="xl">
       <div>Profile</div>
       <ChipSelect id="multi-names" label="Names" options={names} optionsSelected={selectedOptions} setOptionsSelected={setSelectedOptions} />
       <div>{JSON.stringify(selectedOptions)}</div>
-    </>
+    </Container>
   );
 };
 
