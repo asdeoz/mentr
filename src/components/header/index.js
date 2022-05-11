@@ -1,5 +1,12 @@
 import { AppBar, Container, Grid, Toolbar } from "@mui/material";
 import Image from "next/image";
+import UserAvatar from "../user-avatar";
+import Link from '../link';
+
+const user = {
+  name: 'Peter',
+  username: 'peter@phoenix.edu',
+};
 
 
 const Header = () => (
@@ -7,8 +14,13 @@ const Header = () => (
     <Container maxWidth="xl">
       <Toolbar disableGutters>
         <Grid container>
-          <Grid item justifyContent="flex-start">
-            <Image src="/images/mentr_logo_trimmed.png" width="120" height="39" alt="Mentr logo" />
+          <Grid item flexGrow={1} className="header-logo">
+            <Link href="/dashboard">
+              <Image src="/images/mentr_logo_trimmed.png" width="120" height="39" alt="Mentr logo" />
+            </Link>
+          </Grid>
+          <Grid item flexGrow={0}>
+            <UserAvatar username={user.username} />
           </Grid>
         </Grid>
       </Toolbar>

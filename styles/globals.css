@@ -18,3 +18,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.header-logo {
+  padding-top: 8px;
+}
+
+.menu-link {
+  text-decoration: none;
+  color: black;
+}
