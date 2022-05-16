@@ -5,11 +5,14 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 
+import Layout from '../src/components/layout';
+
 import '../styles/globals.css'
 
 const clientSideEmotionCache = createEmotionCache();
 
 function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
+  const hideHeader = Component.hideHeader || false;
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -19,9 +22,9 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }) 
       </Head>
       <ThemeProvider theme={theme}>
       <CssBaseline />
-        <main>
+        <Layout hideHeader={hideHeader}>
           <Component {...pageProps} />
-        </main>
+        </Layout>
       </ThemeProvider>
     </CacheProvider>
   );
