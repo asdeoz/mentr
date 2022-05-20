@@ -25,7 +25,7 @@ function getStyles(option, options) {
   };
 }
 
-const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected }) => {
+const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected, fullWidth = false }) => {
   const [selectedValues, setSelectedValues] = useState([]);
 
   useEffect(() => {
@@ -43,8 +43,8 @@ const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected })
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+    <>
+      <FormControl sx={{ m: 1, width: fullWidth ? '100%' : 300, margin: 0 }}>
         <InputLabel id={`${id}-label`}>{label}</InputLabel>
         <Select
           labelId={`${id}-label`}
@@ -61,6 +61,7 @@ const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected })
             </Box>
           )}
           MenuProps={MenuProps}
+          fullWidth={fullWidth}
         >
           {options.map((o) => (
             <MenuItem
@@ -73,7 +74,7 @@ const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected })
           ))}
         </Select>
       </FormControl>
-    </div>
+    </>
   );
 }
 
