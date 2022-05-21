@@ -16,7 +16,7 @@ const Header = () => (
         <Grid container>
           <Grid item flexGrow={1} className="header-logo">
             <Link href="/dashboard">
-              <Image src="/images/mentr_logo_trimmed.png" width="120" height="39" alt="Mentr logo" />
+              <Image src="/images/mentr_logo_trimmed.png" width="120" height="39" alt="Mentr logo" priority="low" />
             </Link>
           </Grid>
           <Grid item flexGrow={0}>
