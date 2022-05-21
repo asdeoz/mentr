@@ -28,9 +28,15 @@ const UserInfo = ({ user }) => {
     setNewSkill('');
   };
 
+  const save = (event) => {
+    event.preventDefault();
+    console.log(event);
+    console.log(event.target.firstName.value);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={save}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={2}>
             <Avvvatars style="shape" value={user.username} size={100} border shadow borderColor="#000000" />
@@ -52,7 +58,7 @@ const UserInfo = ({ user }) => {
                 <TextField variant="outlined" id="new-skill" name="newSkill" label="New Skill" fullWidth onChange={(e) => setNewSkill(e.target.value)} />
               </Grid>
               <Grid item xs={4}>
-                <Button variant="contained" id="add-skill" name="addSkill" onClick={addNewSkill} disabled={!newSkill} fullWidth>Add new skill</Button>
+                <Button variant="contained" id="add-skill" name="addSkill" size="large" onClick={addNewSkill} disabled={!newSkill} fullWidth>Add skill</Button>
               </Grid>
             </Grid>
           </Grid>
@@ -94,9 +100,9 @@ const UserInfo = ({ user }) => {
               ))}
             </NativeSelect>
           </Grid>
-          <Grid item xs={12} md={6}></Grid>
-          <Grid item xs={12} md={6}></Grid>
-          <Grid item xs={12} md={6}></Grid>
+          <Grid item xs={12} container justifyContent="flex-end">
+            <Button variant="contained" type="submit" size="large" sx={{ minWidth: 150 }}>Save</Button>
+          </Grid>
         </Grid>
       </form>
     </>
