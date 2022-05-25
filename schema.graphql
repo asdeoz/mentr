@@ -1,0 +1,506 @@
+
+type SkillTag {
+  title: String!
+  skills(filter: ModelLinkSkillTagsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelLinkSkillTagsConnection
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Skill {
+  title: String!
+  details: String
+  icon: String
+  skillTags(filter: ModelLinkSkillTagsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelLinkSkillTagsConnection
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  isAvailableToMentor: Boolean!
+  piProfileType: PiProfileType
+  numberOfMenteesCanCoach: Int
+  skills(filter: ModelUserSkillFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelUserSkillConnection
+  menteeRequest(filter: ModelMentorshipRequestFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelMentorshipRequestConnection
+  mentorRequest(filter: ModelMentorshipRequestFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelMentorshipRequestConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type UserSkill {
+  id: ID!
+  userId: ID!
+  skillId: ID!
+  user: User!
+  skill: Skill!
+  proficiency: Int!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type MentorshipRequest {
+  id: ID!
+  menteeId: ID!
+  mentorId: ID!
+  skillId: ID!
+  mentee: User!
+  mentor: User!
+  skill: Skill!
+  status: MentorshipRequestStatus!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum MentorshipRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum PiProfileType {
+  Analyzer
+  Controller
+  Specialist
+  Strategist
+  Venturer
+  Individualist
+  Scholar
+  Altruist
+  Captain
+  Collaborator
+  Maverick
+  Persuader
+  Promoter
+  Adapter
+  Craftsman
+  Guardian
+  Operator
+}
+
+type LinkSkillTags {
+  id: ID!
+  skillTagID: ID!
+  skillID: ID!
+  skillTag: SkillTag!
+  skill: Skill!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelSkillTagConnection {
+  items: [SkillTag]!
+  nextToken: String
+}
+
+input ModelSkillTagFilterInput {
+  title: ModelStringInput
+  and: [ModelSkillTagFilterInput]
+  or: [ModelSkillTagFilterInput]
+  not: ModelSkillTagFilterInput
+}
+
+type Query {
+  getSkillTag(id: ID!): SkillTag
+  listSkillTags(filter: ModelSkillTagFilterInput, limit: Int, nextToken: String): ModelSkillTagConnection
+  getSkill(id: ID!): Skill
+  listSkills(filter: ModelSkillFilterInput, limit: Int, nextToken: String): ModelSkillConnection
+  getUser(id: ID!): User
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
+  getUserSkill(id: ID!): UserSkill
+  listUserSkills(filter: ModelUserSkillFilterInput, limit: Int, nextToken: String): ModelUserSkillConnection
+  getMentorshipRequest(id: ID!): MentorshipRequest
+  listMentorshipRequests(filter: ModelMentorshipRequestFilterInput, limit: Int, nextToken: String): ModelMentorshipRequestConnection
+  getLinkSkillTags(id: ID!): LinkSkillTags
+  listLinkSkillTags(filter: ModelLinkSkillTagsFilterInput, limit: Int, nextToken: String): ModelLinkSkillTagsConnection
+}
+
+input ModelSkillTagConditionInput {
+  title: ModelStringInput
+  and: [ModelSkillTagConditionInput]
+  or: [ModelSkillTagConditionInput]
+  not: ModelSkillTagConditionInput
+}
+
+input CreateSkillTagInput {
+  title: String!
+  id: ID
+}
+
+input UpdateSkillTagInput {
+  title: String
+  id: ID!
+}
+
+input DeleteSkillTagInput {
+  id: ID!
+}
+
+type Mutation {
+  createSkillTag(input: CreateSkillTagInput!, condition: ModelSkillTagConditionInput): SkillTag
+  updateSkillTag(input: UpdateSkillTagInput!, condition: ModelSkillTagConditionInput): SkillTag
+  deleteSkillTag(input: DeleteSkillTagInput!, condition: ModelSkillTagConditionInput): SkillTag
+  createSkill(input: CreateSkillInput!, condition: ModelSkillConditionInput): Skill
+  updateSkill(input: UpdateSkillInput!, condition: ModelSkillConditionInput): Skill
+  deleteSkill(input: DeleteSkillInput!, condition: ModelSkillConditionInput): Skill
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
+  createUserSkill(input: CreateUserSkillInput!, condition: ModelUserSkillConditionInput): UserSkill
+  updateUserSkill(input: UpdateUserSkillInput!, condition: ModelUserSkillConditionInput): UserSkill
+  deleteUserSkill(input: DeleteUserSkillInput!, condition: ModelUserSkillConditionInput): UserSkill
+  createMentorshipRequest(input: CreateMentorshipRequestInput!, condition: ModelMentorshipRequestConditionInput): MentorshipRequest
+  updateMentorshipRequest(input: UpdateMentorshipRequestInput!, condition: ModelMentorshipRequestConditionInput): MentorshipRequest
+  deleteMentorshipRequest(input: DeleteMentorshipRequestInput!, condition: ModelMentorshipRequestConditionInput): MentorshipRequest
+  createLinkSkillTags(input: CreateLinkSkillTagsInput!, condition: ModelLinkSkillTagsConditionInput): LinkSkillTags
+  updateLinkSkillTags(input: UpdateLinkSkillTagsInput!, condition: ModelLinkSkillTagsConditionInput): LinkSkillTags
+  deleteLinkSkillTags(input: DeleteLinkSkillTagsInput!, condition: ModelLinkSkillTagsConditionInput): LinkSkillTags
+}
+
+type Subscription {
+  onCreateSkillTag: SkillTag @aws_subscribe(mutations: ["createSkillTag"])
+  onUpdateSkillTag: SkillTag @aws_subscribe(mutations: ["updateSkillTag"])
+  onDeleteSkillTag: SkillTag @aws_subscribe(mutations: ["deleteSkillTag"])
+  onCreateSkill: Skill @aws_subscribe(mutations: ["createSkill"])
+  onUpdateSkill: Skill @aws_subscribe(mutations: ["updateSkill"])
+  onDeleteSkill: Skill @aws_subscribe(mutations: ["deleteSkill"])
+  onCreateUser: User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser: User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateUserSkill: UserSkill @aws_subscribe(mutations: ["createUserSkill"])
+  onUpdateUserSkill: UserSkill @aws_subscribe(mutations: ["updateUserSkill"])
+  onDeleteUserSkill: UserSkill @aws_subscribe(mutations: ["deleteUserSkill"])
+  onCreateMentorshipRequest: MentorshipRequest @aws_subscribe(mutations: ["createMentorshipRequest"])
+  onUpdateMentorshipRequest: MentorshipRequest @aws_subscribe(mutations: ["updateMentorshipRequest"])
+  onDeleteMentorshipRequest: MentorshipRequest @aws_subscribe(mutations: ["deleteMentorshipRequest"])
+  onCreateLinkSkillTags: LinkSkillTags @aws_subscribe(mutations: ["createLinkSkillTags"])
+  onUpdateLinkSkillTags: LinkSkillTags @aws_subscribe(mutations: ["updateLinkSkillTags"])
+  onDeleteLinkSkillTags: LinkSkillTags @aws_subscribe(mutations: ["deleteLinkSkillTags"])
+}
+
+type ModelSkillConnection {
+  items: [Skill]!
+  nextToken: String
+}
+
+input ModelSkillFilterInput {
+  title: ModelStringInput
+  details: ModelStringInput
+  icon: ModelStringInput
+  and: [ModelSkillFilterInput]
+  or: [ModelSkillFilterInput]
+  not: ModelSkillFilterInput
+}
+
+input ModelSkillConditionInput {
+  title: ModelStringInput
+  details: ModelStringInput
+  icon: ModelStringInput
+  and: [ModelSkillConditionInput]
+  or: [ModelSkillConditionInput]
+  not: ModelSkillConditionInput
+}
+
+input CreateSkillInput {
+  title: String!
+  details: String
+  icon: String
+  id: ID
+}
+
+input UpdateSkillInput {
+  title: String
+  details: String
+  icon: String
+  id: ID!
+}
+
+input DeleteSkillInput {
+  id: ID!
+}
+
+type ModelUserConnection {
+  items: [User]!
+  nextToken: String
+}
+
+input ModelPiProfileTypeInput {
+  eq: PiProfileType
+  ne: PiProfileType
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  firstName: ModelStringInput
+  lastName: ModelStringInput
+  email: ModelStringInput
+  isAvailableToMentor: ModelBooleanInput
+  piProfileType: ModelPiProfileTypeInput
+  numberOfMenteesCanCoach: ModelIntInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input ModelUserConditionInput {
+  firstName: ModelStringInput
+  lastName: ModelStringInput
+  email: ModelStringInput
+  isAvailableToMentor: ModelBooleanInput
+  piProfileType: ModelPiProfileTypeInput
+  numberOfMenteesCanCoach: ModelIntInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateUserInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  email: String!
+  isAvailableToMentor: Boolean!
+  piProfileType: PiProfileType
+  numberOfMenteesCanCoach: Int
+}
+
+input UpdateUserInput {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  isAvailableToMentor: Boolean
+  piProfileType: PiProfileType
+  numberOfMenteesCanCoach: Int
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+type ModelUserSkillConnection {
+  items: [UserSkill]!
+  nextToken: String
+}
+
+input ModelUserSkillFilterInput {
+  id: ModelIDInput
+  userId: ModelIDInput
+  skillId: ModelIDInput
+  proficiency: ModelIntInput
+  and: [ModelUserSkillFilterInput]
+  or: [ModelUserSkillFilterInput]
+  not: ModelUserSkillFilterInput
+}
+
+input ModelUserSkillConditionInput {
+  userId: ModelIDInput
+  skillId: ModelIDInput
+  proficiency: ModelIntInput
+  and: [ModelUserSkillConditionInput]
+  or: [ModelUserSkillConditionInput]
+  not: ModelUserSkillConditionInput
+}
+
+input CreateUserSkillInput {
+  id: ID
+  userId: ID!
+  skillId: ID!
+  proficiency: Int!
+}
+
+input UpdateUserSkillInput {
+  id: ID!
+  userId: ID
+  skillId: ID
+  proficiency: Int
+}
+
+input DeleteUserSkillInput {
+  id: ID!
+}
+
+type ModelMentorshipRequestConnection {
+  items: [MentorshipRequest]!
+  nextToken: String
+}
+
+input ModelMentorshipRequestStatusInput {
+  eq: MentorshipRequestStatus
+  ne: MentorshipRequestStatus
+}
+
+input ModelMentorshipRequestFilterInput {
+  id: ModelIDInput
+  menteeId: ModelIDInput
+  mentorId: ModelIDInput
+  skillId: ModelIDInput
+  status: ModelMentorshipRequestStatusInput
+  and: [ModelMentorshipRequestFilterInput]
+  or: [ModelMentorshipRequestFilterInput]
+  not: ModelMentorshipRequestFilterInput
+}
+
+input ModelMentorshipRequestConditionInput {
+  menteeId: ModelIDInput
+  mentorId: ModelIDInput
+  skillId: ModelIDInput
+  status: ModelMentorshipRequestStatusInput
+  and: [ModelMentorshipRequestConditionInput]
+  or: [ModelMentorshipRequestConditionInput]
+  not: ModelMentorshipRequestConditionInput
+}
+
+input CreateMentorshipRequestInput {
+  id: ID
+  menteeId: ID!
+  mentorId: ID!
+  skillId: ID!
+  status: MentorshipRequestStatus!
+}
+
+input UpdateMentorshipRequestInput {
+  id: ID!
+  menteeId: ID
+  mentorId: ID
+  skillId: ID
+  status: MentorshipRequestStatus
+}
+
+input DeleteMentorshipRequestInput {
+  id: ID!
+}
+
+type ModelLinkSkillTagsConnection {
+  items: [LinkSkillTags]!
+  nextToken: String
+}
+
+input ModelLinkSkillTagsFilterInput {
+  id: ModelIDInput
+  skillTagID: ModelIDInput
+  skillID: ModelIDInput
+  and: [ModelLinkSkillTagsFilterInput]
+  or: [ModelLinkSkillTagsFilterInput]
+  not: ModelLinkSkillTagsFilterInput
+}
+
+input ModelLinkSkillTagsConditionInput {
+  skillTagID: ModelIDInput
+  skillID: ModelIDInput
+  and: [ModelLinkSkillTagsConditionInput]
+  or: [ModelLinkSkillTagsConditionInput]
+  not: ModelLinkSkillTagsConditionInput
+}
+
+input CreateLinkSkillTagsInput {
+  id: ID
+  skillTagID: ID!
+  skillID: ID!
+}
+
+input UpdateLinkSkillTagsInput {
+  id: ID!
+  skillTagID: ID
+  skillID: ID
+}
+
+input DeleteLinkSkillTagsInput {
+  id: ID!
+}
+
