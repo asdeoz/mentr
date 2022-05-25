@@ -2,10 +2,10 @@ import Head from 'next/head';
 import { ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
-import theme from '../src/theme';
-import createEmotionCache from '../src/createEmotionCache';
+import theme from '../theme';
+import createEmotionCache from '../createEmotionCache';
 
-import Layout from '../src/components/layout';
+import Layout from '../components/layout';
 
 import '../styles/globals.css'
 

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fauna-generate": "DOTENV_CONFIG_PATH=.env.local graphql-codegen -r dotenv/config --config fauna-codegen.yml"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -15,11 +16,18 @@
     "@mui/icons-material": "^5.6.0",
     "@mui/material": "^5.6.0",
     "avvvatars-react": "^0.4.2",
+    "graphql": "^16.5.0",
+    "graphql-request": "^4.2.0",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/introspection": "^2.1.1",
+    "@graphql-codegen/typescript-graphql-request": "^4.4.8",
+    "@graphql-codegen/typescript-operations": "^2.4.0",
+    "dotenv": "^16.0.1",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.4"
   }
