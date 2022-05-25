@@ -1,7 +1,10 @@
-import { Avatar, Box, Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-const login = () => {
+const Login = () => {
+  const router = useRouter();
+
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -9,6 +12,8 @@ const login = () => {
       email: data.get('email'),
       password: data.get('password'),
     });
+    // TODO: Authenticate user and actually log them in
+    router.push('/dashboard');
   };
 
   return (
@@ -19,9 +24,7 @@ const login = () => {
       flexDirection: 'column',
       alignItems: 'center',
     }}>
-      {/* <Avatar> */}
       <Image src="/images/mentr_logo.png" width="100" height="100" alt="Mentr" />
-      {/* </Avatar> */}
       <Typography component="h1" variant="h5">Login</Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
       <TextField
@@ -61,4 +64,4 @@ const login = () => {
   );
 }
 
-export default login;
+export default Login;
