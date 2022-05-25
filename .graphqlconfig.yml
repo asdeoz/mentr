@@ -1,6 +1,3 @@
-project:
-  Codegen Project:
-    schemaPath: ./schema/schema.graphql
 projects:
   Codegen Project:
     schemaPath: schema.graphql
