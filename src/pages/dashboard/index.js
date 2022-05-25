@@ -1,9 +1,12 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import UserList from "../../components/user-list";
 import MentorRequests from "../../components/mentor-requests";
 import MentorApplications from "../../components/mentor-applications";
 
 const Profile = () => {
+  const router = useRouter();
+
   const mentees = [
     {
       firstName: 'Peter',
@@ -66,7 +69,10 @@ const Profile = () => {
       <Typography variant="h1">Dashboard</Typography>
       <Grid container spacing={2} direction="column">
         <Grid item><UserList title="Mentees" users={mentees} /></Grid>
-        <Grid item><UserList title="Mentors" users={mentors} /></Grid>
+        <Grid item container direction="column">
+          <Grid item><UserList title="Mentors" users={mentors} /></Grid>
+          <Grid item><Button variant="outlined" onClick={() => router.push('/find-mentor')}>Find a Mentor</Button></Grid>
+        </Grid>
         <Grid item><MentorRequests requests={requests} /></Grid>
         <Grid item><MentorApplications applications={applications} /></Grid>
       </Grid>
