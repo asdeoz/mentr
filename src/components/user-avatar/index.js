@@ -15,6 +15,7 @@ const UserAvatar = ({ username }) => {
 
   const pages = [
     { name: 'Dashboard', url: '/dashboard' },
+    { name: 'Find a Mentor', url: '/find-mentor' },
     { name: 'Profile', url: '/profile' },
   ];
 
