@@ -1,0 +1,19 @@
+mutation createUser($input:UserInput!) {
+  createUser(data:$input) {
+    firstName
+    lastName
+    email
+    avatar
+    skills {
+      skill {
+        title
+        details
+        icon
+      }
+      proficiency
+    }
+    isAvailableToMentor
+    piProfileType
+    numberOfMenteesCanCoach
+  }
+}

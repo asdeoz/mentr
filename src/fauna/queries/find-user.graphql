@@ -1,0 +1,19 @@
+query findUser($id:ID!) {
+  findUserByID(id:$id) {
+    firstName
+    lastName
+    email
+    avatar
+    skills {
+      skill {
+        title
+        details
+        icon
+      }
+      proficiency
+    }
+    isAvailableToMentor
+    piProfileType
+    numberOfMenteesCanCoach
+  }
+}

@@ -1,5 +1,5 @@
 import { Grid, Paper } from '@mui/material';
-import Login from '../src/components/login';
+import Login from '../components/login';
 
 const Home = () => {
   return (
