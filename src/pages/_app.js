@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import theme from '../theme';
 import createEmotionCache from '../createEmotionCache';
+import { MentrContextProvider } from '../context';
 
 import Layout from '../components/layout';
 
@@ -20,12 +21,14 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }) 
         <meta property="og:title" content="Mentr" key="title" />
         <title>Mentr</title>
       </Head>
-      <ThemeProvider theme={theme}>
-      <CssBaseline />
-        <Layout hideHeader={hideHeader}>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+      <MentrContextProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Layout hideHeader={hideHeader}>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </MentrContextProvider>
     </CacheProvider>
   );
 }
