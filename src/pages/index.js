@@ -28,7 +28,6 @@ Home.hideHeader = true;
 export const getServerSideProps = async () => {
   try {
     const data = await API.graphql(graphqlOperation(listUsers));
-    console.log(data?.data?.listUsers?.items);
     return {
       props: {
         users: data?.data?.listUsers?.items,

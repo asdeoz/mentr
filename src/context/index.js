@@ -4,6 +4,7 @@ import ACTIONS from './types';
 const initialState = {
   userInformation: {
     user: null,
+    error: null,
   },
 };
 
@@ -28,6 +29,23 @@ export const MentrContextProvider = ({ children }) => {
             user: null,
           },
         };
+      case ACTIONS.REQUEST_SAVE_USER_SUCCESS:
+        return {
+          ...currentState,
+          userInformation: {
+            ...currentState.userInformation,
+            error: null,
+            user: action.user,
+          },
+        };
+      case ACTIONS.REQUEST_SAVE_USER_FAIL:
+        return {
+          ...currentState,
+          userInformation: {
+            ...currentState.userInformation,
+            error: action.error,
+          },
+        };
       default:
         return currentState;
     }
@@ -41,9 +59,25 @@ export const MentrContextProvider = ({ children }) => {
     dispatch({ type: ACTIONS.LOGOUT });
   };
 
+  const saveUser = async (user) => {
+    try {
+      const options = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
+      };
+      const response = await fetch('/api/user', options);
+      const data = await response.json();
+      dispatch({ type: ACTIONS.REQUEST_SAVE_USER_SUCCESS, user: data?.data?.updateUser });
+    } catch (error) {
+      dispatch({ type: ACTIONS.REQUEST_SAVE_USER_FAIL, error });
+    }
+  }
+
   const dispatches = {
     login,
     logout,
+    saveUser,
   };
 
   return (
