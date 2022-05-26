@@ -18,19 +18,22 @@ const MenuProps = {
   },
 };
 
-function getStyles(option, options) {
+function getStyles(option, options, idLabel) {
+  console.log(options);
   return {
     fontWeight:
-      options.find(o => o.id === option.id) ? '500' : '400'
+      options.find(o => o[idLabel] === option.id) ? '500' : '400'
   };
 }
 
-const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected, fullWidth = false }) => {
+const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected, idLabel = 'id', valueLabel = 'value', fullWidth = false }) => {
   const [selectedValues, setSelectedValues] = useState([]);
 
   useEffect(() => {
-    const preselected = optionsSelected.map(os => options.find(o => o.id === os.id));
-    setSelectedValues([...preselected]);
+    if (options) {
+      const preselected = optionsSelected.map(os => options.find(o => o.id === os[idLabel]));
+      setSelectedValues([...preselected]);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
@@ -56,7 +59,7 @@ const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected, f
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value.id} label={value.value} />
+                <Chip key={value.id} label={value[valueLabel]} />
               ))}
             </Box>
           )}
@@ -67,9 +70,9 @@ const ChipSelect = ({ id, label, options, optionsSelected, setOptionsSelected, f
             <MenuItem
               key={o.id}
               value={o}
-              style={getStyles(o, selectedValues)}
+              style={getStyles(o, selectedValues, idLabel)}
             >
-              {o.value}
+              {o[valueLabel]}
             </MenuItem>
           ))}
         </Select>

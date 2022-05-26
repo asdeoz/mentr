@@ -11,7 +11,7 @@ const FoundMentorCard = ({ mentor }) => (
         <Grid container spacing={1}>
           {mentor.skills.map(skill => (
             <Grid item key={skill.id}>
-              <Chip avatar={<Avatar>{skill.proficiency}</Avatar>} label={skill.value} variant="outlined" />
+              <Chip avatar={<Avatar>{skill.proficiency}</Avatar>} label={skill.title} variant="outlined" />
             </Grid>
           ))}
         </Grid>

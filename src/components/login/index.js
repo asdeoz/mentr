@@ -8,7 +8,6 @@ const Login = ({ availableUsers }) => {
   const router = useRouter();
   const [loginError, setLoginError] = useState('');
   const { state, dispatches: { login } } = useContextState();
-  console.log(state);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -18,11 +17,8 @@ const Login = ({ availableUsers }) => {
       email: data.get('email'),
       password: data.get('password'),
     };
-    console.log(credentials);
 
     const foundUser = availableUsers.find(user => user.email === credentials.email);
-
-    console.log(foundUser);
 
     if (foundUser) {
       login(foundUser);
