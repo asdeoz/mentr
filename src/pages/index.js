@@ -1,5 +1,7 @@
 import { Grid, Paper } from '@mui/material';
 import Login from '../components/login';
+import {API, graphqlOperation} from '../graphql/client';
+import {listUsers} from '../graphql/queries';
 
 const Home = () => {
   return (
@@ -24,5 +26,19 @@ const Home = () => {
 };
 
 Home.hideHeader = true;
+
+export const getServerSideProps = async () => { 
+  try {
+  const data = await API.graphql(graphqlOperation(listUsers));
+  console.log(data?.data?.listUsers?.items);
+  } catch (error) {
+    console.log(error);
+  }  
+
+  return {
+    props: {}
+  }
+}
+
 
 export default Home;
