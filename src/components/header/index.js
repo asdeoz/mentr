@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { AppBar, Container, Grid, Toolbar } from '@mui/material';
 import Image from 'next/image';
 import UserAvatar from '../user-avatar';
@@ -5,7 +6,19 @@ import Link from '../link';
 import { useContextState } from '../../context';
 
 const Header = () => {
-  const { state } = useContextState();
+  const { dispatches: { getLoggedUser } } = useContextState();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const loggedUser = await getLoggedUser();
+      setUser(loggedUser);
+    };
+
+    getUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   return (
     <AppBar position="static" sx={{ backgroundColor: 'whitesmoke' }}>
@@ -18,7 +31,9 @@ const Header = () => {
               </Link>
             </Grid>
             <Grid item flexGrow={0}>
-              <UserAvatar username={state?.userInformation?.user?.email} />
+              {user?.email && (
+                <UserAvatar username={user.email} />
+              )}
             </Grid>
           </Grid>
         </Toolbar>

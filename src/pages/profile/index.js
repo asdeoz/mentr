@@ -1,17 +1,26 @@
 import { Container } from '@mui/material';
+import { useEffect, useState } from 'react';
 import UserInfo from '../../components/user-info';
 import { useContextState } from '../../context';
 import { API, graphqlOperation } from '../../graphql/client';
 import { listSkills } from '../../graphql/queries';
 
 const Profile = ({ skills }) => {
-  const { state } = useContextState();
+  const { dispatches: { getLoggedUser } } = useContextState();
+  const [user, setUser] = useState(null);
 
-  const user = state?.userInformation?.user;
+  useEffect(() => {
+    const getUser = async () => {
+      setUser(await getLoggedUser());
+    };
+
+    getUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container maxWidth="xl">
-      <UserInfo user={user} skills={skills} />
+      {user && (<UserInfo user={user} skills={skills} />)}
     </Container>
   );
 };

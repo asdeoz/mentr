@@ -8,6 +8,8 @@ const initialState = {
   },
 };
 
+const USER_ID_KEY = 'USER_ID';
+
 const context = createContext();
 
 export const MentrContextProvider = ({ children }) => {
@@ -52,12 +54,33 @@ export const MentrContextProvider = ({ children }) => {
   }, initialState);
 
   const login = (user) => {
+    sessionStorage.setItem(USER_ID_KEY, user.id);
     dispatch({ type: ACTIONS.LOGIN, user });
   };
 
   const logout = () => {
     dispatch({ type: ACTIONS.LOGOUT });
   };
+
+  const getLoggedUser = async () => {
+    try {
+      if (state?.userInformation?.user) return state?.userInformation?.user;
+      if (sessionStorage.getItem(USER_ID_KEY)) {
+        const userId = sessionStorage.getItem(USER_ID_KEY);
+        const options = {
+          method: 'GET',
+        };
+        const response = await fetch(`/api/user?userId=${userId}`, options);
+        const user = await response.json();
+        if (user) dispatch({ type: ACTIONS.LOGIN, user });
+        return user;
+      }
+      return null;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 
   const saveUser = async (user) => {
     try {
@@ -77,6 +100,7 @@ export const MentrContextProvider = ({ children }) => {
   const dispatches = {
     login,
     logout,
+    getLoggedUser,
     saveUser,
   };
 

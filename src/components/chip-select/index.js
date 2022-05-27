@@ -19,7 +19,6 @@ const MenuProps = {
 };
 
 function getStyles(option, options, idLabel) {
-  console.log(options);
   return {
     fontWeight:
       options.find(o => o[idLabel] === option.id) ? '500' : '400'
