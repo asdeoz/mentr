@@ -1,5 +1,18 @@
 import { API, graphqlOperation } from '../../graphql/client';
 import { updateUser, createUserSkill, deleteUserSkill } from '../../graphql/mutations';
+import { getUser } from '../../graphql/queries';
+
+async function retrieveUser(userId) {
+  try {
+    const userRes = await API.graphql(graphqlOperation(getUser, {
+      id: userId,
+    }));
+
+    return { isSuccessful: true, result: userRes };
+  } catch (error) {
+    return { isSuccessful: false, error };
+  }
+}
 
 async function saveUser(user) {
   try {
@@ -32,7 +45,7 @@ async function saveUser(user) {
       piProfileType: user.piProfileType,
       numberOfMenteesCanCoach: user.numberOfMenteesCanCoach,
     } }));
-    console.log(userRes);
+
     return { isSuccessful: true, result: userRes };
   } catch (error) {
     return { isSuccessful: false, error };
@@ -40,13 +53,17 @@ async function saveUser(user) {
 }
 
 export default async function handler(req, res) {
-  console.log(req.body);
   try {
     switch (req.method) {
+      case 'GET':
+        const getRes = await retrieveUser(req.query.userId);
+        if (getRes.isSuccessful) res.status(200).json(getRes.result?.data?.getUser);
+        else res.status(500).send(getRes.error);
+        break;
       case 'PUT':
-        const response = await saveUser(req.body);
-        if (response.isSuccessful) res.status(200).json(response.result);
-        else res.status(500).send(response.error);
+        const putRes = await saveUser(req.body);
+        if (putRes.isSuccessful) res.status(200).json(putRes.result);
+        else res.status(500).send(putRes.error);
         break;
       default:
         res.status(501).send('Method not implemented');
